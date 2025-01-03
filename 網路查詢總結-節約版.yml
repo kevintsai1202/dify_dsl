@@ -1,0 +1,484 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: 網路查詢總結-節約版
+  use_icon_as_answer_icon: false
+kind: app
+version: 0.1.5
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: tool
+      id: 1735822244314-source-1735822263253-target
+      source: '1735822244314'
+      sourceHandle: source
+      target: '1735822263253'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: tool
+      id: 1735822263253-source-1735831699721-target
+      source: '1735822263253'
+      sourceHandle: source
+      target: '1735831699721'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: parameter-extractor
+        targetType: iteration
+      id: 1735875946702-source-1735822400977-target
+      source: '1735875946702'
+      sourceHandle: source
+      target: '1735822400977'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: code
+      id: 1735831699721-source-1735876327884-target
+      source: '1735831699721'
+      sourceHandle: source
+      target: '1735876327884'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: parameter-extractor
+      id: 1735876327884-source-1735875946702-target
+      source: '1735876327884'
+      sourceHandle: source
+      target: '1735875946702'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: answer
+      id: 1735879283373-source-answer-target
+      source: '1735879283373'
+      sourceHandle: source
+      target: answer
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: true
+        iteration_id: '1735822400977'
+        sourceType: iteration-start
+        targetType: tool
+      id: 1735822400977start-source-1735881475250-target
+      source: 1735822400977start
+      sourceHandle: source
+      target: '1735881475250'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: false
+        sourceType: iteration
+        targetType: llm
+      id: 1735822400977-source-1735879283373-target
+      source: '1735822400977'
+      sourceHandle: source
+      target: '1735879283373'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 開始
+        type: start
+        variables: []
+      height: 53
+      id: '1735822244314'
+      position:
+        x: 30
+        y: 332
+      positionAbsolute:
+        x: 30
+        y: 332
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        answer: '{{#1735879283373.text#}}'
+        desc: ''
+        selected: true
+        title: 最終回覆
+        type: answer
+        variables: []
+      height: 102
+      id: answer
+      position:
+        x: 2450
+        y: 332
+      positionAbsolute:
+        x: 2450
+        y: 332
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: 自訂工具
+        provider_id: 01edbaaa-4658-4bad-b7fc-adfbca21755a
+        provider_name: 優化提示詞
+        provider_type: workflow
+        selected: false
+        title: 優化提示詞
+        tool_configurations: {}
+        tool_label: 優化提示詞
+        tool_name: optQuery
+        tool_parameters:
+          query:
+            type: mixed
+            value: '{{#sys.query#}}'
+        type: tool
+      height: 81
+      id: '1735822263253'
+      position:
+        x: 333
+        y: 332
+      positionAbsolute:
+        x: 333
+        y: 332
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: 將陣列中每個url的內容取出
+        error_handle_mode: remove-abnormal-output
+        height: 264
+        is_parallel: true
+        iterator_selector:
+        - '1735875946702'
+        - urls
+        output_selector:
+        - '1735881475250'
+        - text
+        output_type: array[string]
+        parallel_nums: 10
+        selected: false
+        start_node_id: 1735822400977start
+        title: 內容擷取迴圈
+        type: iteration
+        width: 542
+      height: 264
+      id: '1735822400977'
+      position:
+        x: 1545
+        y: 332
+      positionAbsolute:
+        x: 1545
+        y: 332
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 542
+      zIndex: 1
+    - data:
+        desc: ''
+        isInIteration: true
+        selected: false
+        title: ''
+        type: iteration-start
+      draggable: false
+      height: 48
+      id: 1735822400977start
+      parentId: '1735822400977'
+      position:
+        x: 24
+        y: 68
+      positionAbsolute:
+        x: 1569
+        y: 400
+      selectable: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-iteration-start
+      width: 44
+      zIndex: 1002
+    - data:
+        desc: 本地搜索引擎
+        provider_id: searxng
+        provider_name: searxng
+        provider_type: builtin
+        selected: false
+        title: SearXNG Search
+        tool_configurations:
+          search_type: general
+        tool_label: SearXNG Search
+        tool_name: searxng_search
+        tool_parameters:
+          query:
+            type: mixed
+            value: '{{#1735822263253.text#}}'
+        type: tool
+      height: 117
+      id: '1735831699721'
+      position:
+        x: 636
+        y: 332
+      positionAbsolute:
+        x: 636
+        y: 332
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: 取出url前會先判斷內容是否與提示詞相符
+        instruction: '將 "content" 的內容符合以下資料
+
+          ---
+
+          {{#1735822263253.text#}}
+
+          ---
+
+          的 "url" 取出，並設定在 urls 陣列中'
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: deepseek-chat
+          provider: deepseek
+        parameters:
+        - description: 網址
+          name: urls
+          required: true
+          type: array[string]
+        query:
+        - '1735876327884'
+        - result
+        reasoning_mode: prompt
+        selected: false
+        title: 將搜索結果取出url
+        type: parameter-extractor
+        variables: []
+        vision:
+          enabled: false
+      height: 141
+      id: '1735875946702'
+      position:
+        x: 1242
+        y: 332
+      positionAbsolute:
+        x: 1242
+        y: 332
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        code: "import json\ndef main(arg1: list) -> dict:\n    return {\n        \"\
+          result\": json.dumps(arg1[:5])\n    }\n"
+        code_language: python3
+        desc: 參數提取器只支援String,故需要轉換,另外將結果限縮至五筆內容,避免LLM超過窗口限制
+        outputs:
+          result:
+            children: null
+            type: string
+        selected: false
+        title: Array To String
+        type: code
+        variables:
+        - value_selector:
+          - '1735831699721'
+          - json
+          variable: arg1
+      height: 113
+      id: '1735876327884'
+      position:
+        x: 939
+        y: 332
+      positionAbsolute:
+        x: 939
+        y: 332
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1735822400977'
+          - output
+        desc: 根據回答及網頁內容綱要,將每個段落附加上參考連結
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: deepseek-chat
+          provider: deepseek
+        prompt_template:
+        - id: 4e16a7ad-b25c-425a-9951-d2f907453355
+          role: system
+          text: '<content>
+
+            {{#context#}}
+
+            </content>
+
+            <link>
+
+            {{#1735876327884.result#}}
+
+            </link>
+
+            指令:
+
+            1.依據<content>標籤中的內容進行回答，在每個分段結束插入連結，格式為[[1]](url1) [[2]](url2)
+
+            2.連結資料在<link>標籤中．該分段內容只要跟<link>中的內容相關就要將連結加在段落後，所有<link>內容都要比對，每個分段至少會有1個或以上的連結
+
+            3.相同連結請用一樣的編號
+
+            4.文章最後再將所有連結列出，連結格式為
+
+            參考連結:
+
+            - [title1](url1)
+
+            - [title2](url2)'
+        - id: d514d35f-a9ad-4994-b4cb-c420023e5497
+          role: user
+          text: '{{#1735822263253.text#}}'
+        selected: false
+        title: 附加參考連結
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 141
+      id: '1735879283373'
+      position:
+        x: 2147
+        y: 332
+      positionAbsolute:
+        x: 2147
+        y: 332
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        default_value:
+        - key: text
+          type: string
+          value: 無法取得
+        - key: json
+          type: array[object]
+          value: '[]'
+        desc: 透過工具依據url爬取網頁內容
+        error_strategy: default-value
+        isInIteration: true
+        iteration_id: '1735822400977'
+        provider_id: webscraper
+        provider_name: webscraper
+        provider_type: builtin
+        selected: false
+        title: 網頁內容擷取
+        tool_configurations:
+          generate_summary: 0
+          user_agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
+            (KHTML, like Gecko) Chrome/100.0.1000.0 Safari/537.36
+        tool_label: Web Scraper
+        tool_name: webscraper
+        tool_parameters:
+          url:
+            type: mixed
+            value: '{{#1735822400977.item#}}'
+        type: tool
+      height: 179
+      id: '1735881475250'
+      parentId: '1735822400977'
+      position:
+        x: 219.42857142857156
+        y: 65
+      positionAbsolute:
+        x: 1764.4285714285716
+        y: 397
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+      zIndex: 1002
+    viewport:
+      x: -1146.9999999999998
+      y: -13.999999999999943
+      zoom: 0.7
