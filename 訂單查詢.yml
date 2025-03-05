@@ -1,0 +1,530 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: 訂單查詢
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/mistralai:0.0.2@7790fbca054b5b2a797634e187b06729b5efeed0e8fe2f610ccc87bfddb88721
+kind: app
+version: 0.1.5
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions: []
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - remote_url
+      - local_file
+      enabled: true
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 5
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 1
+    opening_statement: 請問需要甚麼服務?
+    retriever_resource:
+      enabled: false
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions:
+    - 訂單查詢
+    - 聊聊天
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: http-request
+        targetType: code
+      id: 1738762930280-source-1738763451567-target
+      source: '1738762930280'
+      sourceHandle: source
+      target: '1738763451567'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: template-transform
+      id: 1738763451567-source-1738764379953-target
+      source: '1738763451567'
+      sourceHandle: source
+      target: '1738764379953'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: template-transform
+        targetType: answer
+      id: 1738764379953-source-1738765278471-target
+      source: '1738764379953'
+      sourceHandle: source
+      target: '1738765278471'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: if-else
+      id: 1738762917855-source-1738766481920-target
+      source: '1738762917855'
+      sourceHandle: source
+      target: '1738766481920'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: http-request
+      id: 1738766481920-true-1738762930280-target
+      source: '1738766481920'
+      sourceHandle: 'true'
+      target: '1738762930280'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: llm
+      id: 1738766481920-false-1738766524955-target
+      source: '1738766481920'
+      sourceHandle: 'false'
+      target: '1738766524955'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: answer
+      id: 1738766524955-source-1738766846977-target
+      source: '1738766524955'
+      sourceHandle: source
+      target: '1738766846977'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 開始
+        type: start
+        variables:
+        - label: email
+          max_length: 100
+          options: []
+          required: true
+          type: text-input
+          variable: email
+      height: 88
+      id: '1738762917855'
+      position:
+        x: -92.93598820314139
+        y: 295.717332885906
+      positionAbsolute:
+        x: -92.93598820314139
+        y: 295.717332885906
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data: []
+          type: none
+        desc: ''
+        headers: ''
+        method: get
+        params: 'operation:"search"
+
+          email:{{#1738762917855.email#}}'
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 100
+        selected: false
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: HTTP 請求
+        type: http-request
+        url: https://script.googleusercontent.com/macros/echo?user_content_key=Kb-ZpoDB11gRvDZCXO2RRNaj-BJCK-Yci-0cZdEf557UalBnldQnnhVTxepF5SZjtRNbh5TAYs0HnhzyEEX1C6MKIvOOhEbwOJmA1Yb3SEsKFZqtv3DaNYcMrmhZHmUMWojr9NvTBuBLhyHCd5hHa6K_GFwBPscimAWDluhDsmQeSRvHOrHo_HQMARAmAO5OnBTvsFPX21omTxZP95HctTOl4Plzt6XafIJz2PXlGe3aTzWpZgwIJG-EmYb3couCtPAFrYe-UTKMEgqObXQxrduhVM5j5F1cef1llj9AOdo&lib=MxBJyVIhWCfhIQ9K-ZbfcHP7Ucx4u5a-N
+        variables: []
+      height: 375
+      id: '1738762930280'
+      position:
+        x: 829.7754618791939
+        y: 282
+      positionAbsolute:
+        x: 829.7754618791939
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        code: "\nfunction main({arg1}) {\n   arg1 = arg1.replace(\"undefined(\" ,\"\
+          \")\n   arg1 = arg1.replace(\")\",\"\")\n\n    return {\n        result:\
+          \ JSON.parse(arg1)\n    }\n}\n"
+        code_language: javascript
+        desc: ''
+        outputs:
+          result:
+            children: null
+            type: object
+        selected: false
+        title: 代碼執行
+        type: code
+        variables:
+        - value_selector:
+          - '1738762930280'
+          - body
+          variable: arg1
+      height: 52
+      id: '1738763451567'
+      position:
+        x: 1209.6308095489303
+        y: 282
+      positionAbsolute:
+        x: 1209.6308095489303
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        desc: ''
+        selected: false
+        template: "\r\n<h1>訂單資料</h1>\r\n<table border=\"1\" cellpadding=\"8\" style=\"\
+          border-collapse: collapse;\">\r\n{% for key, value in arg1.data.items()\
+          \ %}\r\n<tr><th>{{key}}</th><td>{{value}}</td></tr>\r\n{% endfor %}\r\n\
+          </table>"
+        title: 模板轉換
+        type: template-transform
+        variables:
+        - value_selector:
+          - '1738763451567'
+          - result
+          variable: arg1
+      height: 52
+      id: '1738764379953'
+      position:
+        x: 1595.6764340863183
+        y: 282
+      positionAbsolute:
+        x: 1595.6764340863183
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        answer: '{{#1738764379953.output#}}'
+        desc: ''
+        selected: false
+        title: 直接回覆
+        type: answer
+        variables: []
+      height: 101
+      id: '1738765278471'
+      position:
+        x: 1967.2024007176603
+        y: 282
+      positionAbsolute:
+        x: 1967.2024007176603
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: is
+            id: 5508d266-b7dd-4e29-a44a-c98e238e236d
+            value: 訂單查詢
+            varType: string
+            variable_selector:
+            - sys
+            - query
+          id: 'true'
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: 條件分支
+        type: if-else
+      height: 124
+      id: '1738766481920'
+      position:
+        x: 337.7328014765102
+        y: 295.717332885906
+      positionAbsolute:
+        x: 337.7328014765102
+        y: 295.717332885906
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: mistral-large-latest
+          provider: langgenius/mistralai/mistralai
+        prompt_template:
+        - id: 1814c224-9d61-4ac2-840b-e6c338ecbcd9
+          role: system
+          text: 我是專業客服
+        - id: 5ea709f9-e406-4405-ad65-5ad4b9f235b4
+          role: user
+          text: '{{#sys.query#}}'
+        selected: false
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 88
+      id: '1738766524955'
+      position:
+        x: 829.7754618791939
+        y: 768.8101398974449
+      positionAbsolute:
+        x: 829.7754618791939
+        y: 768.8101398974449
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        answer: '{{#1738766524955.text#}}'
+        desc: ''
+        selected: false
+        title: 直接回覆 2
+        type: answer
+        variables: []
+      height: 101
+      id: '1738766846977'
+      position:
+        x: 1133.8150413143694
+        y: 768.8101398974449
+      positionAbsolute:
+        x: 1133.8150413143694
+        y: 768.8101398974449
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        author: 凱文大叔
+        desc: ''
+        height: 348
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          16px;","text":"HTTP請求可以拿來呼叫API","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          16px;","text":"最上方輸入方法以及URL","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          16px;","text":"header通常看請求是否需要放上協定或是認證資訊,沒特別放空白待預設值就好","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          16px;","text":"PARAMS就是網址 \"?\" 後的參數, 這裡只要放上鍵值即可, 跟你網頁的URLSearchParams是一樣的意思","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          16px;","text":"因為不是post方法, 所以不會帶BODY, 選擇none即可","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 487
+      height: 348
+      id: '1738802214878'
+      position:
+        x: 676.1172261761342
+        y: -93.74231557108268
+      positionAbsolute:
+        x: 676.1172261761342
+        y: -93.74231557108268
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 487
+    - data:
+        author: 凱文大叔
+        desc: ''
+        height: 206
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          16px;","text":"依據輸入的內容判斷,若等於\"訂單查詢\", 就會呼叫HTTP請求","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          16px;","text":"否則進入一般聊天","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 350
+      height: 206
+      id: '1738802619983'
+      position:
+        x: 283.5837759194827
+        y: 59.130102748939024
+      positionAbsolute:
+        x: 283.5837759194827
+        y: 59.130102748939024
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 350
+    - data:
+        author: 凱文大叔
+        desc: ''
+        height: 229
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          16px;","text":"剛進入聊天若需要特別輸入的,例如EMAIL,可以加在開始節點, 這樣後面查詢就能直接引用","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 303
+      height: 229
+      id: '1738802736588'
+      position:
+        x: -106.00198806059353
+        y: 35.28761548801819
+      positionAbsolute:
+        x: -106.00198806059353
+        y: 35.28761548801819
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 303
+    - data:
+        author: 凱文大叔
+        desc: ''
+        height: 350
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          16px;","text":"因為你的GAS不是輸出標準JSON, 所以需要透過程式做一些轉換","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          16px;","text":"你的GAS中主要是傳回一個回調函示,讓前端收到後可以執行, 所以在不影響網頁功能的情形下只好透過JS將不要的資訊去除,
+          使用字串的 replace 方法換成空白","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          16px;","text":"最後輸出要再使用 JSON.parse 轉為JSON格式, 方便使用模板語法輸出表格內容","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          16px;","text":"輸出的部分需要看輸出甚麼, JSON的話就是Object，若將來有機會輸出多筆資料，就會使用Array[Object]","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 376
+      height: 350
+      id: '1738802843614'
+      position:
+        x: 1180.0391314104434
+        y: -93.74231557108268
+      positionAbsolute:
+        x: 1180.0391314104434
+        y: -93.74231557108268
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 376
+    - data:
+        author: 凱文大叔
+        desc: ''
+        height: 351
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          16px;","text":"模板轉換是一種動態產生html格式的語言, 這個節點使用的是 jinja2","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          16px;","text":"你可以先把網頁的 HTML 貼上，重複的部分再透過動態代碼重複產生","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          16px;","text":"不過更簡單的做法是問AI，我是把JSON內容跟網頁的HTML一起給ChatGPT,請它幫我轉成jinja2語法","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 349
+      height: 351
+      id: '1738803279770'
+      position:
+        x: 1562.6365973693835
+        y: -93.74231557108268
+      positionAbsolute:
+        x: 1562.6365973693835
+        y: -93.74231557108268
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 349
+    - data:
+        author: 凱文大叔
+        desc: ''
+        height: 227
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"font-size:
+          16px;","text":"這個LLM節點單純只是來跟用戶聊聊天, 若結合產品資訊或是用戶歷史訂單, 或許還能請AI推薦產品給用戶","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 283
+      height: 227
+      id: '1738803609794'
+      position:
+        x: 813.1421909163894
+        y: 924.9613028947484
+      positionAbsolute:
+        x: 813.1421909163894
+        y: 924.9613028947484
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 283
+    viewport:
+      x: 103.91366895899046
+      y: 143.4508726554581
+      zoom: 0.5285090202806904
