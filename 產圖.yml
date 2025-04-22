@@ -1,0 +1,397 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: 產圖
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/x:0.0.4@eaee70ddfad2258caf1de0fd980763f7da03ddd63d8ca211904738c6de403609
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/dalle:0.0.4@c0d3625ef2fe13b8e8f6125fb4335822904d382e9c65e592f0d44dca037e3f6a
+kind: app
+version: 0.1.5
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: llm
+      id: 1745308305187-source-1745308311071-target
+      source: '1745308305187'
+      sourceHandle: source
+      target: '1745308311071'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: tool
+      id: 1745308311071-source-1745308352773-target
+      source: '1745308311071'
+      sourceHandle: source
+      target: '1745308352773'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: tool
+        targetType: end
+      id: 1745308352773-source-1745309414460-target
+      source: '1745308352773'
+      sourceHandle: source
+      target: '1745309414460'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 開始
+        type: start
+        variables:
+        - label: query
+          max_length: 500
+          options: []
+          required: true
+          type: paragraph
+          variable: query
+      height: 90
+      id: '1745308305187'
+      position:
+        x: -17
+        y: 282
+      positionAbsolute:
+        x: -17
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params: {}
+          mode: chat
+          name: grok-3-beta
+          provider: langgenius/x/x
+        prompt_template:
+        - id: 5e373a2a-32f1-491f-b5d3-cd6e9a8999ec
+          role: system
+          text: 你是DAll-E文生圖達人,請依據請求產生給DALL-E的提示詞
+        - role: user
+          text: '{{#1745308305187.query#}}'
+        selected: false
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 90
+      id: '1745308311071'
+      position:
+        x: 324
+        y: 282
+      positionAbsolute:
+        x: 324
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        is_team_authorization: false
+        output_schema: null
+        paramSchemas:
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: Image prompt, you can check the official documentation of DallE
+              3
+            ja_JP: Image prompt, you can check the official documentation of DallE
+              3
+            pt_BR: Image prompt, you can check the official documentation of DallE
+              3
+            zh_Hans: 图像提示词，您可以查看 DallE 3 的官方文档
+          label:
+            en_US: Prompt
+            ja_JP: Prompt
+            pt_BR: Prompt
+            zh_Hans: 提示词
+          llm_description: Image prompt of DallE 3, you should describe the image
+            you want to generate as a list of words as possible as detailed
+          max: null
+          min: null
+          name: prompt
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: square
+          form: form
+          human_description:
+            en_US: selecting the image size
+            ja_JP: selecting the image size
+            pt_BR: selecting the image size
+            zh_Hans: 选择图像大小
+          label:
+            en_US: Image size
+            ja_JP: Image size
+            pt_BR: Image size
+            zh_Hans: 图像大小
+          llm_description: ''
+          max: null
+          min: null
+          name: size
+          options:
+          - label:
+              en_US: Squre(1024x1024)
+              ja_JP: Squre(1024x1024)
+              pt_BR: Squre(1024x1024)
+              zh_Hans: 方(1024x1024)
+            value: square
+          - label:
+              en_US: Vertical(1024x1792)
+              ja_JP: Vertical(1024x1792)
+              pt_BR: Vertical(1024x1792)
+              zh_Hans: 竖屏(1024x1792)
+            value: vertical
+          - label:
+              en_US: Horizontal(1792x1024)
+              ja_JP: Horizontal(1792x1024)
+              pt_BR: Horizontal(1792x1024)
+              zh_Hans: 横屏(1792x1024)
+            value: horizontal
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: select
+        - auto_generate: null
+          default: 1
+          form: form
+          human_description:
+            en_US: selecting the number of images
+            ja_JP: selecting the number of images
+            pt_BR: selecting the number of images
+            zh_Hans: 选择图像数量
+          label:
+            en_US: Number of images
+            ja_JP: Number of images
+            pt_BR: Number of images
+            zh_Hans: 图像数量
+          llm_description: ''
+          max: 1
+          min: 1
+          name: n
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: number
+        - auto_generate: null
+          default: standard
+          form: form
+          human_description:
+            en_US: selecting the image quality
+            ja_JP: selecting the image quality
+            pt_BR: selecting the image quality
+            zh_Hans: 选择图像质量
+          label:
+            en_US: Image quality
+            ja_JP: Image quality
+            pt_BR: Image quality
+            zh_Hans: 图像质量
+          llm_description: ''
+          max: null
+          min: null
+          name: quality
+          options:
+          - label:
+              en_US: Standard
+              ja_JP: Standard
+              pt_BR: Standard
+              zh_Hans: 标准
+            value: standard
+          - label:
+              en_US: HD
+              ja_JP: HD
+              pt_BR: HD
+              zh_Hans: 高清
+            value: hd
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: select
+        - auto_generate: null
+          default: vivid
+          form: form
+          human_description:
+            en_US: selecting the image style
+            ja_JP: selecting the image style
+            pt_BR: selecting the image style
+            zh_Hans: 选择图像风格
+          label:
+            en_US: Image style
+            ja_JP: Image style
+            pt_BR: Image style
+            zh_Hans: 图像风格
+          llm_description: ''
+          max: null
+          min: null
+          name: style
+          options:
+          - label:
+              en_US: Vivid
+              ja_JP: Vivid
+              pt_BR: Vivid
+              zh_Hans: 生动
+            value: vivid
+          - label:
+              en_US: Natural
+              ja_JP: Natural
+              pt_BR: Natural
+              zh_Hans: 自然
+            value: natural
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: select
+        params:
+          n: ''
+          prompt: ''
+          quality: ''
+          size: ''
+          style: ''
+        provider_id: langgenius/dalle/dalle
+        provider_name: langgenius/dalle/dalle
+        provider_type: builtin
+        selected: false
+        title: DALL-E 3
+        tool_configurations:
+          n: 1
+          quality: standard
+          size: square
+          style: vivid
+        tool_label: DALL-E 3
+        tool_name: dalle3
+        tool_parameters:
+          prompt:
+            type: mixed
+            value: '{{#1745308311071.text#}}'
+        type: tool
+      height: 168
+      id: '1745308352773'
+      position:
+        x: 688
+        y: 282
+      positionAbsolute:
+        x: 688
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1745308352773'
+          - files
+          variable: files
+        selected: false
+        title: 結束
+        type: end
+      height: 90
+      id: '1745309414460'
+      position:
+        x: 992
+        y: 282
+      positionAbsolute:
+        x: 992
+        y: 282
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: 149.44729247593614
+      y: 133.95760786793875
+      zoom: 0.7412335049014176
